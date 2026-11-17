@@ -34,7 +34,7 @@ const RESUME_DATA = {
     ['北京大学出版社', '参与文学、艺术学、教育学等书稿审读与校对，检查用词、语义衔接和前后一致性，按编辑要求修订。'],
     ['北京大学艺术学院学术部 · 部长', '联络主讲人、协调活动现场，负责校学术交流节艺术展的海报与人员统筹，现场人流超 300 人。'],
   ],
-  skills: ['IELTS 7.0（2024.05，听力 6.0、口语 6.0）。西班牙语基础，完成西班牙文学读书报告。', '剪映、Remotion、Gemini、DeepSeek。'],
+  skills: ['IELTS 7.0（2024.05）。', '剪映、Remotion、Gemini、DeepSeek。'],
   projects: [
     { title:'未名·秋招季', type:'选择驱动网页游戏', art:'autumn', stack:'React · TypeScript · Vite · 分支叙事', body:'在燕园度过十二周秋招。配置简历、投递岗位，在文学初心和就业现实之间做出自己的选择。', preview:`${import.meta.env.BASE_URL}frame-autumn.png`, url:'https://kenan14121412-sketch.github.io/weiming-autumn-site/' },
     { title:'私人放映室', type:'交互简历与作品集', art:'cinema', preview:IMAGE_ASSETS.ROOM_BG, stack:'React · Tailwind CSS · Lucide · Canvas · Web Audio API', body:'用物件组织文学作品、研究和履历。访问者可以自由探索，也可切换至便于快速阅读和打印的简历。', url:import.meta.env.BASE_URL },
@@ -257,7 +257,7 @@ function Room({project,index,open,change,lit}) {
       <span className="curtain curtain-left"/><span className="curtain curtain-right"/>
     </Prop>
     <button className="projection" data-route="project" onClick={()=>open('project')} aria-label={'查看《'+project.title+'》'} key={project.title}>
-      <ProjectFrame project={project}/><span className="projection-type">{project.type}</span><strong>{project.title}</strong><span className="projection-link"><ArrowUpRight size={14}/></span>
+      <ProjectFrame project={project}/>
     </button>
     <Prop onPlate={onPlate} type="projector" route="project" label="数字项目" action={()=>open('project')} image={A.PROJECTOR_IMG}>
       <span className="projector-reels"><i/><i/></span><span className="projector-body"/><span className="tripod"/>
@@ -311,7 +311,7 @@ function ProjectDetails({project,reel,change,close}) {
       {playing?<iframe src={project.url} title={project.title} sandbox="allow-scripts allow-same-origin allow-forms allow-popups" referrerPolicy="no-referrer" allowFullScreen/>:
         <><ProjectFrame project={project}/>{external?<button className="play-project" onClick={()=>setPlaying(true)}><Film size={18}/>在银幕内游玩</button>:<span>{project.type}</span>}</>}
     </div>
-    <p>{project.body}</p><h3>技术与形式</h3><p>{project.stack}</p>
+    <p>{project.body}</p>
     <div className="modal-actions">
       <div className="project-links">
         {external?<a className="ink-button" href={project.url} target="_blank" rel="noreferrer">打开原站 <ArrowUpRight size={16}/></a>:<button className="ink-button" onClick={close}>返回放映室 <ArrowUpRight size={16}/></button>}
