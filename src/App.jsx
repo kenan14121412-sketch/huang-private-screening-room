@@ -22,19 +22,26 @@ const RESUME_DATA = {
   focus: '现代文学与批评理论 · 小说创作 · 数字叙事',
   statement: '我在北京大学研究中国当代文学，也写小说、改编短剧。我关注叙事中的声音、停顿和视角，也尝试把阅读经验转化为可以观看、选择和参与的作品。从文本细读到网页交互，我关心同一个问题：读者在什么时候听见一个人，又在什么时候错过了他？',
   education: [
-    ['2025.09 至今', '北京大学 · 中国语言文学系', '中国当代文学硕士在读'],
-    ['本科', '北京大学 · 汉语言文学', '经济学双学位，曾修读文化产业管理。影片精读、跨文化艺术传播学、中国电影文化史。曾获国家奖学金、北京大学三好学生。'],
+    ['2025.09 至今', '北京大学 · 中国语言文学系', '中国当代文学 · 硕士研究生'],
+    ['2022.09–2025.09', '北京大学 · 中国语言文学系', '汉语言文学 · 本科。相关课程：影片精读、中国当代电影史、中国现代文学史、中国当代文学史等。'],
+    ['', '北京大学 · 艺术学院', '文化产业管理。相关课程：中国电影史、文化产业导论、跨文化艺术传播学、信息技术与文化产业等。'],
+    ['2021.09–2025.09', '北京大学 · 国家发展研究院', '经济学双学位。相关课程：财务会计、财报分析、行为经济学、中级微观经济学、数字金融等。'],
   ],
+  honors: '国家奖学金、北京大学三好学生、北京大学二等奖学金、北京大学社会工作奖等。',
   experience: [
-    ['竖屏视频制作与拉片 · 教育口播', '使用剪映、Remotion 制作竖屏内容，按口播字幕时间码编排动效、重点卡片和画面切换，复核图文是否遮挡人脸、是否与口播同步，输出成片。拆解约 4 分钟的竖屏口播，输出复剪方案，列明字幕重对齐、手势衔接、AI 镜头口型、手部形变和角色一致性等检查项。'],
-    ['日区 AI 角色对话 · 文风规范与本地化', '对照日文小说原文与中日双语场景，整理 9 类文风提示词，明确对白比例、接话节奏、情绪推进和角色边界。编写同场景对照示例。'],
-    ['影视叙事与跨文化传播 · 课程研究', '比较《阿甘正传》《小丑》等 5 部美国电影的人物动机与情感线索。拆解《漫长的季节》的多线悬疑、镜头转场和音乐叙事。以《在远方》《黑神话：悟空》为例，结合受访者反馈分析文化元素的接受差异，提出分众传播思路。'],
+    ['竖屏视频制作与拉片 · 教育口播', '使用剪映、Remotion 制作竖屏内容，按口播字幕时间码编排动效、重点卡片和画面切换，复核图文是否遮挡人脸、是否与口播同步，输出成片。拆解约 4 分钟的竖屏口播视频，按时间码记录构图、剪点、字幕与插图变化，输出复剪方案，标出应保留的停顿及字幕重对齐的位置，并列明手势衔接、AI 镜头口型、手部形变及角色一致性等检查项。'],
+    ['影视叙事与跨文化传播 · 课程研究', '比较《阿甘正传》《小丑》等 5 部美国电影的人物动机与情感线索。以《漫长的季节》为例拆解多线悬疑、镜头转场和音乐叙事。以《在远方》《黑神话：悟空》为例，结合受访者反馈分析文化元素的接受差异，在课程论文中提出分众传播思路。'],
   ],
   roles: [
+    ['元石科技', '针对 AI 角色扮演类产品进行文风规范与本地化。对照日文小说原文与中日双语场景，整理文风提示词，明确对白比例、接话节奏、情绪推进和角色边界。编写同场景对照示例，供生成角色扮演对话时参照。'],
+    ['北京大学艺术与商业研究中心', '撰写北京大学与泡泡玛特联合活动展览策划与方案，提出相关的营销渠道；进行桌游开发相关调研与测评；策划 ArtInsight 大师课安排。'],
     ['北京大学出版社', '参与文学、艺术学、教育学等书稿审读与校对，检查用词、语义衔接和前后一致性，按编辑要求修订。'],
-    ['北京大学艺术学院学术部 · 部长', '联络主讲人、协调活动现场，负责校学术交流节艺术展的海报与人员统筹，现场人流超 300 人。'],
   ],
-  skills: ['IELTS 7.0（2024.05）。', '剪映、Remotion、Gemini、DeepSeek。'],
+  practice: [
+    ['2021–2022', '北京大学艺术学院学术部 · 部长 / 校团委学术科创部 · 学术委员', '策划校学术交流节艺术展，负责海报制作、人员统筹，参与人流量超 300 人；协助校挑战杯活动推进，负责收集汇总信息，并定期在公众号平台发布；参与策划学院新年晚会活动。'],
+    ['2021–2022', '北京大学国家发展研究院学生会实践部 · 干事', '参与策划联合参访泡泡玛特、腾讯等活动。'],
+  ],
+  skills: ['IELTS 7.0 · 大学英语六级 580。', '剪映、Remotion、Gemini、DeepSeek。'],
   projects: [
     { title:'未名·秋招季', type:'选择驱动网页游戏', art:'autumn', stack:'React · TypeScript · Vite · 分支叙事', body:'在燕园度过十二周秋招。配置简历、投递岗位，在文学初心和就业现实之间做出自己的选择。', preview:`${import.meta.env.BASE_URL}frame-autumn.png`, url:'https://kenan14121412-sketch.github.io/weiming-autumn-site/' },
     { title:'私人放映室', type:'交互简历与作品集', art:'cinema', preview:IMAGE_ASSETS.ROOM_BG, stack:'React · Tailwind CSS · Lucide · Canvas · Web Audio API', body:'用物件组织文学作品、研究和履历。访问者可以自由探索，也可切换至便于快速阅读和打印的简历。', url:import.meta.env.BASE_URL },
@@ -282,8 +289,10 @@ function Resume({copy,print,contact,read}) {
     <header className="resume-head"><div><p>个人简历</p><h1>{D.name}</h1><p>{D.focus}</p><div className="resume-contacts"><a href={'mailto:'+D.email}>{D.email}</a><a href={'tel:'+D.phone}>{D.phone}</a></div></div>
     <div className="resume-actions"><button onClick={()=>copy(D.email+' / '+D.phone)}><Copy size={16}/>复制联系方式</button><button onClick={()=>print('resume')}><Printer size={16}/>打印 / 导出 PDF</button><button onClick={()=>contact('contact')}>联系我 <ArrowUpRight size={15}/></button></div></header>
     <section><h2>教育经历</h2>{D.education.map(([date,title,desc])=><div className="cv-row" key={title}><h3>{title}<small>{date}</small></h3><p>{desc}</p></div>)}</section>
-    <section><h2>短剧与 AIGC 项目</h2>{D.experience.map(([title,desc])=><div className="cv-row" key={title}><h3>{title}</h3><p>{desc}</p></div>)}</section>
-    <section><h2>实习与协作经历</h2>{D.roles.map(([title,desc])=><div className="cv-row" key={title}><h3>{title}</h3><p>{desc}</p></div>)}</section>
+    <section><h2>荣誉奖励</h2><p>{D.honors}</p></section>
+    <section><h2>其他经历</h2>{D.experience.map(([title,desc])=><div className="cv-row" key={title}><h3>{title}</h3><p>{desc}</p></div>)}</section>
+    <section><h2>实习经历</h2>{D.roles.map(([title,desc])=><div className="cv-row" key={title}><h3>{title}</h3><p>{desc}</p></div>)}</section>
+    <section><h2>实践经历</h2>{D.practice.map(([date,title,desc])=><div className="cv-row" key={title}><h3>{title}<small>{date}</small></h3><p>{desc}</p></div>)}</section>
     <section><h2>语言与工具</h2>{D.skills.map(t=><p key={t}>{t}</p>)}</section>
     <section className="resume-actions"><h2>文学作品</h2><div className="resume-links">{D.novels.map((n,i)=><button key={n.title} onClick={()=>read('novel',i)}>{n.title} <ArrowUpRight size={14}/></button>)}</div></section>
   </article>
