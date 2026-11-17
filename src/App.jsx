@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, BookOpen, ChevronLeft, ChevronRight, Clapperboard, Copy, Film, LampDesk, LibraryBig, Moon, PanelsTopLeft, Printer, Radio, Sun, Ticket, Volume2, X } from 'lucide-react'
 import works from './works.json'
+import filmStudies from './film-studies.json'
 import { gsap } from './vendor/index.js'
 import './style.css'
 
@@ -15,6 +16,7 @@ const IMAGE_ASSETS = {
 }
 
 const RESUME_DATA = {
+  filmStudies,
   name: '黄柏泓',
   email: '2501210927@stu.pku.edu.cn',
   phone: '15389089498',
@@ -532,6 +534,46 @@ function Book({novel,play,back}) {
 }
 
 
+function FilmArchive({open,play}) {
+  const [drawer,setDrawer]=useState(null)
+  const [reading,setReading]=useState(null)
+  const panel=useRef(null)
+  const group=drawer===null?null:D.filmStudies[drawer]
+  function select(i){setReading(null);setDrawer(drawer===i?null:i);play('slide')}
+  useEffect(()=>{if(reading!==null)panel.current?.focus()},[reading])
+  const change=direction=>{setReading(i=>Math.max(0,Math.min(group.cards.length-1,i+direction)));play('paper')}
+  return <div className="film-archive">
+    <header className="archive-intro"><span className="archive-kicker">THE CRITICAL ARCHIVE / 01—03</span><h3>在影像之间，<em>读懂未说出口的事。</em></h3><p>三个抽屉，九则影像笔记。拉开一格，从一个镜头进入一篇研究。</p></header>
+    <div className="archive-layout">
+      <aside className="archive-cabinet" aria-label="影像研究抽屉柜">
+        <div className="cabinet-topline"><span>黄柏泓 · 影像研究</span><LibraryBig size={18}/></div>
+        {D.filmStudies.map((g,i)=><div key={g.id} className={'archive-drawer '+(drawer===i?'is-open':'')}>
+          <div className="drawer-cavity" aria-hidden="true"><i/><i/><i/></div>
+          <button className="drawer-front" onClick={()=>select(i)} aria-expanded={drawer===i} aria-controls="archive-contents">
+            <span className="drawer-number">0{i+1}</span><span className="drawer-label"><strong>{g.title}</strong><small>{g.english}</small></span><span className="drawer-handle" aria-hidden="true"/>
+          </button>
+        </div>)}
+        <p className="cabinet-instruction">{drawer===null?'轻触黄铜把手，拉开抽屉':'再次点击把手，收起抽屉'}</p>
+      </aside>
+      <section id="archive-contents" className={'archive-contents '+(group?'has-files':'')} aria-label="抽屉内的研究卡片">
+        {!group?<div className="archive-empty"><div className="empty-folio" aria-hidden="true"><Film/><span>FIELD<br/><em>Notes.</em></span><small>CINEMA · CULTURE · CRITICISM</small></div><p>选择左侧的一个抽屉</p></div>:reading===null?<div key={group.id} className="archive-files"><header className="archive-section-head"><small>{group.kind}</small><h4>{group.subtitle}</h4></header>
+          <FanGallery items={group.cards} label={group.title} renderItem={(card,i)=><button className={'study-sheet study-'+group.id} onClick={()=>{setReading(i);play('paper')}}>
+            <span className="study-meta">NOTE 0{i+1} <span>{card.tag}</span></span><div className="study-art" aria-hidden="true"><i/><i/><i/><span>{['FRAME','READ','VOICE'][drawer]}<br/><em>0{i+1}</em></span></div><h3>{card.title}</h3><p>{card.point}</p><span className="study-bottom">阅读观点与原文 <ArrowUpRight size={17}/></span>
+          </button>}/>
+        </div>:<article ref={panel} tabIndex={-1} className="study-reading" key={group.id+'-'+reading}>
+          <button className="back-collection" onClick={()=>setReading(null)}><ArrowLeft size={16}/>返回这格抽屉</button>
+          <p className="archive-kicker">NOTE 0{reading+1} / {group.cards[reading].tag}</p><h3>{group.cards[reading].title}</h3>
+          <section><h4>观点提炼</h4><p>{group.cards[reading].point}</p></section>
+          <section className="study-quote"><h4>原文摘录</h4><blockquote>{group.cards[reading].quote}</blockquote></section>
+          <footer className="study-source"><span>黄柏泓 · {group.kind}</span><cite>《{group.source}》</cite><small>{group.cards[reading].chapter}</small></footer>
+          <nav className="study-paging" aria-label="切换研究笔记"><button disabled={reading===0} onClick={()=>change(-1)}><ArrowLeft size={16}/>上一篇</button><span>{reading+1} / {group.cards.length}</span><button disabled={reading===group.cards.length-1} onClick={()=>change(1)}>下一篇<ArrowRight size={16}/></button></nav>
+        </article>}
+      </section>
+    </div>
+    <footer className="archive-other"><span>还想了解更多？</span><button onClick={()=>open('archive')}>教育与学术档案 <ArrowUpRight size={15}/></button></footer>
+  </div>
+}
+
 function ObjectGallery({selection,open,copy,print,serial,play}) {
   const [detail,setDetail]=useState(null)
   const {type,index=0}=selection
@@ -556,6 +598,7 @@ function ObjectGallery({selection,open,copy,print,serial,play}) {
     {title:'VIP 观影券',label:'打印与保存',body:'领取带有专属观影编号的简历摘要',content:<TicketBody serial={serial} print={print}/>}
   ]
 
+  if(type==='archive')return <FilmArchive open={open} play={play}/>
   const initial=type==='ticket'?3:type==='posters'?Math.max(0,index-1):type==='book'?index:cards.length>2?1:0
   if(detail!==null)return <div className="gallery-detail"><button className="back-collection" onClick={()=>setDetail(null)}><ArrowLeft size={16}/>返回{galleryTitle(type)}</button><h3>{cards[detail].title}</h3>{cards[detail].content}</div>
   return <FanGallery label={galleryTitle(type)} items={cards} initial={initial} renderItem={(card,i)=>
@@ -569,7 +612,7 @@ function ObjectGallery({selection,open,copy,print,serial,play}) {
 }
 
 function galleryTitle(type){
-  return {project:'数字项目',archive:'教育与学术',book:'阅读批注',desk:'关于我',posters:'幕后手记',contact:'联系与简历',ticket:'联系与简历'}[type]
+  return {project:'数字项目',archive:'影像研究档案',book:'阅读批注',desk:'关于我',posters:'幕后手记',contact:'联系与简历',ticket:'联系与简历'}[type]
 }
 
 function Entrance({done}) {
