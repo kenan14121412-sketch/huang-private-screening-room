@@ -45,6 +45,7 @@ const RESUME_DATA = {
   ],
   skills: ['IELTS 7.0 · 大学英语六级 580。', '剪映、Remotion、Gemini、DeepSeek。'],
   projects: [
+    { title:"文学死了吗", type:"文学口播", art:"cinema", video:`${import.meta.env.BASE_URL}literature.mp4`, body:"黄柏泓 · 文学口播作品", url:"" },
     { title:'未名·秋招季', type:'选择驱动网页游戏', art:'autumn', stack:'React · TypeScript · Vite · 分支叙事', body:'在燕园度过十二周秋招。配置简历、投递岗位，在文学初心和就业现实之间做出自己的选择。', preview:`${import.meta.env.BASE_URL}frame-autumn.png`, url:'https://kenan14121412-sketch.github.io/weiming-autumn-site/' },
     { title:'私人放映室', type:'交互简历与作品集', art:'cinema', preview:IMAGE_ASSETS.ROOM_BG, stack:'React · Tailwind CSS · Lucide · Canvas · Web Audio API', body:'用物件组织文学作品、研究和履历。访问者可以自由探索，也可切换至便于快速阅读和打印的简历。', url:import.meta.env.BASE_URL },
   ],
@@ -199,6 +200,7 @@ function Prop({type, label, action, image, onPlate, route, children}) {
 }
 
 function Room({project,index,open,change,lit}) {
+  const [curtainsOpen,setCurtainsOpen]=useState(false)
   const A=D.images
   const onPlate=Boolean(A.ROOM_BG)
   const room=useRef(null)
@@ -240,6 +242,7 @@ function Room({project,index,open,change,lit}) {
   function activate(e){
     const target=targetFor(e)
     if(!target||opening.current)return
+    if(target.dataset.route==='curtains'){e.preventDefault();e.stopPropagation();setCurtainsOpen(true);return}
     e.preventDefault()
     e.stopPropagation()
     opening.current=true
@@ -274,6 +277,7 @@ function Room({project,index,open,change,lit}) {
     <Prop onPlate={onPlate} type="cabinet" route="archive" label="打开学术档案" action={()=>open('archive')} image={A.CABINET_IMG}>
       <span className="drawer-grid">{sequence(12).map(i=><i key={i}/>)}</span>
     </Prop>
+    <button className={"screen-drapes "+(curtainsOpen?"opened":"")} data-route="curtains" aria-label="拉开银幕窗帘" aria-expanded={curtainsOpen}><span/><span/></button>
     <button className="literary-books" data-route="shelf" onClick={()=>open('shelf')} aria-label="文学作品集"></button><div className="bookcase" aria-label="书架">{D.books.map((book,i)=><button key={book[0]} data-route="book" data-index={i} aria-label={book[0]+'学术批注'} title={book[0]} onClick={()=>open('book',i)}>{onPlate?null:book[0].slice(1,-1)}</button>)}</div>
     <Prop onPlate={onPlate} type="desk" route="desk" label="打开打字机" action={()=>open('desk')} image={A.TYPEWRITER_IMG}>
       <span className="desk-leg"/><span className="desktop"/><span className="lamp"/><span className="typewriter"/>
@@ -311,11 +315,13 @@ function Poster({poster,play}) {
 }
 
 function ProjectFrame({project}) {
+  if(project.video)return <div className="video-cover"><Film size={36}/><strong>文学死了吗</strong><span>文学口播 · 点击观看</span></div>
   return project.preview ? <img className="project-frame" src={project.preview} alt="" draggable="false"/> : <Art kind={project.art}/>
 }
 
 function ProjectDetails({project,reel,change,close}) {
   const [playing,setPlaying]=useState(false)
+  if(project.video)return <div className="spoken-video"><video controls playsInline preload="metadata" src={project.video}/><p>{project.body}</p></div>
   const external=project.url!=='/'
   return <>
     <div className={'project-visual '+(playing?'playing':'')}>
@@ -542,7 +548,7 @@ function FilmArchive({open,play}) {
   function select(i){setReading(null);setDrawer(drawer===i?null:i);play('slide')}
   useEffect(()=>{if(reading!==null)panel.current?.focus()},[reading])
   const change=direction=>{setReading(i=>Math.max(0,Math.min(group.cards.length-1,i+direction)));play('paper')}
-  return <div className="film-archive">
+  return <div className={"film-archive "+(group?"mobile-file-open":"")}>
     <header className="archive-intro"><span className="archive-kicker">THE CRITICAL ARCHIVE / 01—03</span><h3>在影像之间，<em>读懂未说出口的事。</em></h3><p>三个抽屉，九则影像笔记。拉开一格，从一个镜头进入一篇研究。</p></header>
     <div className="archive-layout">
       <aside className="archive-cabinet" aria-label="影像研究抽屉柜">
@@ -556,6 +562,7 @@ function FilmArchive({open,play}) {
         <p className="cabinet-instruction">{drawer===null?'轻触黄铜把手，拉开抽屉':'再次点击把手，收起抽屉'}</p>
       </aside>
       <section id="archive-contents" className={'archive-contents '+(group?'has-files':'')} aria-label="抽屉内的研究卡片">
+        {group&&<button className="mobile-archive-back" onClick={()=>{setDrawer(null);setReading(null)}}><ArrowLeft size={16}/>返回抽屉</button>}
         {!group?<div className="archive-empty"><div className="empty-folio" aria-hidden="true"><Film/><span>FIELD<br/><em>Notes.</em></span><small>CINEMA · CULTURE · CRITICISM</small></div><p>选择左侧的一个抽屉</p></div>:reading===null?<div key={group.id} className="archive-files"><header className="archive-section-head"><small>{group.kind}</small><h4>{group.subtitle}</h4></header>
           <FanGallery items={group.cards} label={group.title} renderItem={(card,i)=><button className={'study-sheet study-'+group.id} onClick={()=>{setReading(i);play('paper')}}>
             <span className="study-meta">NOTE 0{i+1} <span>{card.tag}</span></span><div className="study-art" aria-hidden="true"><i/><i/><i/><span>{['FRAME','READ','VOICE'][drawer]}<br/><em>0{i+1}</em></span></div><h3>{card.title}</h3><p>{card.point}</p><span className="study-bottom">阅读观点与原文 <ArrowUpRight size={17}/></span>
